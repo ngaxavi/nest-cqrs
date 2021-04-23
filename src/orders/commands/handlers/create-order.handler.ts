@@ -1,8 +1,15 @@
 import { Logger } from '@nestjs/common';
-import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import {
+  CommandHandler,
+  EventBus,
+  EventPublisher,
+  ICommandHandler,
+} from '@nestjs/cqrs';
 import { yellowBright } from 'cli-color';
 import { OrdersRepository } from 'src/orders/orders.repository';
 import { CreateOrderCommand } from '../impl/create-order.command';
+import { OrderRoot } from '../../orders.model';
+import { OrderCreatedEvent } from '../../events/impl/order-created.event';
 
 @CommandHandler(CreateOrderCommand)
 export class CreateOrderHandler implements ICommandHandler<CreateOrderCommand> {
@@ -17,9 +24,9 @@ export class CreateOrderHandler implements ICommandHandler<CreateOrderCommand> {
     );
 
     const { orderDto } = command;
-    const order = this.publisher.mergeObjectContext(
-      await this.orderRepository.createOne(orderDto),
-    );
+    const orderCreated = await this.orderRepository.createOne(orderDto);
+    const order = this.publisher.mergeObjectContext(orderCreated);
+
     order.createdOrder();
     order.commit();
   }

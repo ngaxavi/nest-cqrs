@@ -13,7 +13,6 @@ import { OrderCreatedEvent } from './events/impl/order-created.event';
 import { OrderUpdatedEvent } from './events/impl/order-updated.event';
 import { OrderDeletedEvent } from './events/impl/order-deleted.event';
 import { OrderFoundEvent } from './events/impl/order-found.event';
-import { CreateOrderDto, UpdateOrderDto } from './dto';
 
 @Module({
   imports: [
@@ -32,8 +31,8 @@ import { CreateOrderDto, UpdateOrderDto } from './dto';
 })
 export class OrdersModule implements OnModuleInit {
   public eventHandlers = {
-    OrderCreatedEvent: (data: CreateOrderDto) => new OrderCreatedEvent(data),
-    OrderUpdatedEvent: (data: UpdateOrderDto) => new OrderUpdatedEvent(data),
+    OrderCreatedEvent: (data: any) => new OrderCreatedEvent(data),
+    OrderUpdatedEvent: (data: any) => new OrderUpdatedEvent(data),
     OrderDeletedEvent: (data: string) => new OrderDeletedEvent(data),
     OrderFoundEvent: (data?: string) => new OrderFoundEvent(data),
   };
@@ -45,7 +44,7 @@ export class OrdersModule implements OnModuleInit {
 
   onModuleInit() {
     this.eventStore.setEventHandlers(this.eventHandlers);
-    this.eventStore.bridgeEventsTo((this.eventBus as any).subject$);
+    this.eventStore.bridgeEventsTo(this.eventBus.subject$);
     this.eventBus.publisher = this.eventStore;
   }
 }

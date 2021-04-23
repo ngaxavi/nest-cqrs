@@ -10,25 +10,25 @@ import { STATUS_TYPE } from '../orders.interface';
 export class UpdateOrderDto {
   @IsOptional()
   @IsString()
-  readonly orderNumber: string;
+  readonly orderNumber?: string;
 
   @IsOptional()
-  readonly goods: any;
+  readonly goods?: any;
 
   @IsString()
   @IsOptional()
   @IsIn(STATUS_TYPE)
-  readonly status: string;
+  readonly status?: string;
 
   @IsNumber()
   @IsOptional()
-  readonly quantity: number;
+  readonly quantity?: number;
 
   @IsString()
   @IsNotEmpty()
-  readonly address: string;
+  readonly address?: string;
 
   @IsString()
   @IsNotEmpty()
-  readonly paymentMethod: string;
+  readonly paymentMethod?: string;
 }
