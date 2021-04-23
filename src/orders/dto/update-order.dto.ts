@@ -5,6 +5,7 @@ import {
   IsIn,
   IsNumber,
 } from 'class-validator';
+import { STATUS_TYPE } from '../orders.interface';
 
 export class UpdateOrderDto {
   @IsOptional()
@@ -12,11 +13,11 @@ export class UpdateOrderDto {
   readonly orderNumber: string;
 
   @IsOptional()
-  readonly goods: object;
+  readonly goods: any;
 
   @IsString()
   @IsOptional()
-  @IsIn(['in progress', 'cancelled', 'delivered'])
+  @IsIn(STATUS_TYPE)
   readonly status: string;
 
   @IsNumber()
