@@ -12,7 +12,10 @@ $ npm install
 
 ```bash
 # event-store
-docker run --name eventstore-node -d -p 2113:2113 -p 1113:1113 eventstore/eventstore
+docker run --name eventstore-node -d -p 2113:2113 -p 1113:1113 eventstore/eventstore:latest --insecure \
+  --run-projections=All \
+  --enable-external-tcp \
+  --enable-atom-pub-over-http
 
 # Mongodb
 docker run --name orders-db -d -p 27017:27017 mongo
