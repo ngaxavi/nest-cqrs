@@ -16,5 +16,10 @@
     "every weekend"
   ],
   "semanticCommits": "enabled",
-  "semanticCommitType": "build"
+  "semanticCommitType": "build",
+  "ignoreDeps": [
+    "@nestjs/mongoose",
+    "mongodb",
+    "node"
+  ]
 }
