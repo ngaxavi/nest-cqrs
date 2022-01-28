@@ -2,24 +2,22 @@
 
 This is an application that demonstrates how to use Nest.js, Event Store and Mongo to create a RESTful API microservice.
 
+## Prerequisite
+The following tools must be installed on your computer:
+* Docker
+* Docker-Compose
+
 ## Installation
 
 ```bash
 $ npm install
 ```
 
-## Running the app
+## Running the app in development
 
 ```bash
-# event-store
-docker run --name eventstore-node -d -p 2113:2113 -p 1113:1113 eventstore/eventstore:latest --insecure \
-  --run-projections=All \
-  --enable-external-tcp \
-  --enable-atom-pub-over-http
-
-# Mongodb
-docker run --name orders-db -d -p 27017:27017 mongo
-
+# start  event-store and mongodb
+docker-compose up -d
 
 # development
 $ npm run start
