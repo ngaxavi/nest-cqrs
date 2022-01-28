@@ -15,8 +15,7 @@ const configProvider = {
     ConfigModule.forRoot(config),
     EventStoreModule.forRoot(config),
     MongooseModule.forRootAsync({
-      useFactory: async (configService: ConfigService) =>
-        configService.getMongo(),
+      useFactory: async (configService: ConfigService) => configService.getMongo(),
       inject: [ConfigService],
     }),
     OrdersModule,

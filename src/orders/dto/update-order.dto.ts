@@ -1,10 +1,4 @@
-import {
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  IsIn,
-  IsNumber,
-} from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsIn, IsNumber } from 'class-validator';
 import { STATUS_TYPE } from '../orders.interface';
 
 export class UpdateOrderDto {

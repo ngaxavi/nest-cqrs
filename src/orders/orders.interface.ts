@@ -1,2 +1,1 @@
 export const STATUS_TYPE = ['IN_PROGRESS', 'CANCELLED', 'DELIVERED'];
-

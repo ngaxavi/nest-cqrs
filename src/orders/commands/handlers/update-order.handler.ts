@@ -1,7 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { yellowBright } from 'cli-color';
-import { Types } from 'mongoose';
 import { OrdersRepository } from 'src/orders/orders.repository';
 import { UpdateOrderCommand } from '../impl/update-order.command';
 

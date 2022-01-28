@@ -1,14 +1,4 @@
-import {
-  Controller,
-  Post,
-  Body,
-  Get,
-  Put,
-  Param,
-  Delete,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Controller, Post, Body, Get, Put, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateOrderDto, UpdateOrderDto } from './dto';
 import { OrdersService } from './orders.service';
 import { v4 as uuid } from 'uuid';

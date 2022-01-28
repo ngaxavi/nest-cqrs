@@ -12,9 +12,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(configService.getPort());
   Logger.log(
-    `${configService.getConfig().name} (${
-      configService.getConfig().id
-    }) running on port ${configService.getPort()}`,
+    `${configService.getConfig().name} (${configService.getConfig().id}) running on port ${configService.getPort()}`,
   );
 }
 bootstrap();

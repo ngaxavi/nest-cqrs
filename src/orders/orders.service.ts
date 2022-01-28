@@ -9,10 +9,7 @@ import { DeleteOrderCommand } from './commands/impl/delete-order.command';
 
 @Injectable()
 export class OrdersService {
-  constructor(
-    private readonly commandBus: CommandBus,
-    private readonly queryBus: QueryBus,
-  ) {}
+  constructor(private readonly commandBus: CommandBus, private readonly queryBus: QueryBus) {}
 
   async createOrder(dto: CreateOrderDto) {
     return this.commandBus.execute(new CreateOrderCommand(dto));

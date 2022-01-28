@@ -95,10 +95,7 @@ export class ConfigService {
       const host = process.env.MONGO_HOST || env.mongo.host || 'localhost';
       const port = process.env.MONGO_PORT || env.mongo.port || '27017';
       const database = process.env.MONGO_DB || env.mongo.database || '';
-      mongo.uri =
-        process.env.MONGO_URI ||
-        env.mongo.uri ||
-        `mongodb://${credentials}${host}:${port}/${database}`;
+      mongo.uri = process.env.MONGO_URI || env.mongo.uri || `mongodb://${credentials}${host}:${port}/${database}`;
     }
 
     // Event Store
@@ -107,12 +104,8 @@ export class ConfigService {
       hostname: process.env.EVENT_STORE_HOTSNAME || 'localhost',
       tcpPort: +process.env.EVENT_STORE_TCP_PORT || 1113,
       credentials: {
-        username:
-          process.env.EVENT_STORE_CREDENTIALS_USERNAME ||
-          env.eventStore.credentials.username,
-        password:
-          process.env.EVENT_STORE_CREDENTIALS_PASSWORD ||
-          env.eventStore.credentials.password,
+        username: process.env.EVENT_STORE_CREDENTIALS_USERNAME || env.eventStore.credentials.username,
+        password: process.env.EVENT_STORE_CREDENTIALS_PASSWORD || env.eventStore.credentials.password,
       },
       poolOptions: {
         min: +process.env.EVENT_STORE_POOLOPTIONS_MIN || 1,
@@ -120,16 +113,10 @@ export class ConfigService {
       },
     };
 
-    const protocol =
-      process.env.EVENT_STORE_PROTOCOL || env.eventStore.protocol || 'http';
-    const hostname =
-      process.env.EVENT_STORE_HOSTNAME || env.eventStore.host || 'localhost';
-    const httpPort =
-      process.env.EVENT_STORE_HTTP_PORT || env.eventStore.httpPort || '2113';
-    eventStore.uri =
-      process.env.EVENT_STORE_URI ||
-      env.eventStore.uri ||
-      `${protocol}://${hostname}:${httpPort}`;
+    const protocol = process.env.EVENT_STORE_PROTOCOL || env.eventStore.protocol || 'http';
+    const hostname = process.env.EVENT_STORE_HOSTNAME || env.eventStore.host || 'localhost';
+    const httpPort = process.env.EVENT_STORE_HTTP_PORT || env.eventStore.httpPort || '2113';
+    eventStore.uri = process.env.EVENT_STORE_URI || env.eventStore.uri || `${protocol}://${hostname}:${httpPort}`;
 
     this.config = {
       id: uuid(),
