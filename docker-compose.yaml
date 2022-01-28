@@ -23,9 +23,9 @@ services:
       - type: volume
         source: eventstore-volume-data
         target: /var/lib/eventstore
-     - type: volume
-       source: eventstore-volume-logs
-       target: /var/log/eventstore
+      - type: volume
+        source: eventstore-volume-logs
+        target: /var/log/eventstore
 
   db:
     image: mongo
@@ -37,6 +37,8 @@ services:
     volumes:
       - db-data:/data/db
 
+networks:
+  order-service:
 
 volumes:
   eventstore-volume-data:

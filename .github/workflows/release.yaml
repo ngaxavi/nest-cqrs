@@ -1,0 +1,26 @@
+name: Release
+on:
+  push:
+    branches: [master]
+jobs:
+  release:
+    if: "!startsWith(github.event.head_commit.message, 'chore: release')"
+    name: Release
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - name: Install dependencies
+        run: npm ci
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GIT_AUTHOR_EMAIL: ${{ secrets.GIT_EMAIL }}
+          GIT_COMMITTER_EMAIL: ${{ secrets.GIT_EMAIL }}
+          GIT_AUTHOR_NAME: ${{ secrets.GIT_USERNAME }}
+          GIT_COMMITTER_NAME: ${{ secrets.GIT_USERNAME}}
+        run: npx semantic-release
