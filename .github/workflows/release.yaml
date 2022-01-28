@@ -1,7 +1,7 @@
 name: Release
 on:
   push:
-    branches: [master]
+    branches: [main]
 jobs:
   release:
     if: "!startsWith(github.event.head_commit.message, 'chore: release')"

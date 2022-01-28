@@ -1,13 +1,20 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", ":prHourlyLimitNone", "helpers:disableTypesNodeMajor", "group:allNonMajor"],
+  "extends": [
+    "config:base",
+    ":prHourlyLimitNone",
+    "helpers:disableTypesNodeMajor",
+    "group:allNonMajor"
+  ],
   "timezone": "Europe/Berlin",
   "automergeType": "pr",
   "prCreation": "immediate",
   "rebaseWhen": "conflicted",
-  "schedule": [ "after 10pm every weekday",
+  "schedule": [
+    "after 10pm every weekday",
     "before 5am every weekday",
-    "every weekend"],
+    "every weekend"
+  ],
   "semanticCommits": "enabled",
   "semanticCommitType": "build"
 }
