@@ -11,7 +11,7 @@ export class OrderCreatedHandler implements IEventHandler<OrderCreatedEvent> {
   async handle(event: OrderCreatedEvent) {
     Logger.log(cyan(JSON.stringify(event), 'OrderCreatedEvent'));
 
-    const id = event.orderDto._id;
+    const id = event.orderDto.id;
     await this.orderRepository.updateOne(id, { status: 'DELIVERED' });
   }
 }

@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { Order } from './orders.interface';
 import { CreateOrderDto, UpdateOrderDto } from './dto';
 import { OrderRoot } from './orders.model';
+import { OrderDocument } from './orders.schema';
 
 @Injectable()
 export class OrdersRepository {
-  constructor(@InjectModel('Order') private readonly model: Model<Order>) {}
+  constructor(@InjectModel('Order') private readonly model: Model<OrderDocument>) {}
 
   async findAll() {
     const docs = await this.model.find().exec();
@@ -35,11 +35,9 @@ export class OrdersRepository {
     return orderRoot;
   }
 
-  async updateOne(id: Types.ObjectId, dto: UpdateOrderDto) {
-    const doc = await this.model
-      .findByIdAndUpdate(id, { $set: dto }, { new: false })
-      .exec();
-    const orderRoot = new OrderRoot(id.toHexString());
+  async updateOne(id: string, dto: UpdateOrderDto) {
+    const doc = await this.model.findByIdAndUpdate(new Types.ObjectId(id), { $set: dto }, { new: false }).exec();
+    const orderRoot = new OrderRoot(id);
     if (doc === null) {
       throw new NotFoundException(`Order with id ${id} does not exists`);
     }

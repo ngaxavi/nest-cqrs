@@ -1,5 +1,6 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { STATUS_TYPE } from './orders.interface';
+import { Document } from 'mongoose';
 
 @Schema({
   collation: {
@@ -34,3 +35,5 @@ class Order {
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
+
+export type OrderDocument = Order & Document;

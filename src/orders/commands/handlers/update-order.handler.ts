@@ -7,20 +7,13 @@ import { UpdateOrderCommand } from '../impl/update-order.command';
 
 @CommandHandler(UpdateOrderCommand)
 export class UpdateOrderHandler implements ICommandHandler<UpdateOrderCommand> {
-  constructor(
-    private readonly orderRepository: OrdersRepository,
-    private readonly publisher: EventPublisher,
-  ) {}
+  constructor(private readonly orderRepository: OrdersRepository, private readonly publisher: EventPublisher) {}
 
   async execute(command: UpdateOrderCommand) {
-    Logger.log(
-      yellowBright('Async UpdateOrderHandler...', 'UpdateOrderCommand'),
-    );
+    Logger.log(yellowBright('Async UpdateOrderHandler...', 'UpdateOrderCommand'));
 
     const { id, orderDto } = command;
-    const order = this.publisher.mergeObjectContext(
-      await this.orderRepository.updateOne(new Types.ObjectId(id), orderDto),
-    );
+    const order = this.publisher.mergeObjectContext(await this.orderRepository.updateOne(id, orderDto));
     order.updatedOrder();
     order.commit();
   }

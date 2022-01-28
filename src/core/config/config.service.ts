@@ -85,10 +85,6 @@ export class ConfigService {
     env.mongo = env.mongo || {};
     const mongo: MongoConfig = {
       uri: process.env.MONGO_URI || '',
-      useCreateIndex: true,
-      useFindAndModify: false,
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
     };
     if (env.mongo.credentials && env.mongo.credentials.uri) {
       mongo.uri = env.mongo.credentials.uri || process.env.MONGO_URI || '';

@@ -1,4 +1,4 @@
-import { DynamicModule, Global, Module, HttpModule } from '@nestjs/common';
+import { DynamicModule, Global, Module } from '@nestjs/common';
 import { ConfigEnv, ConfigService } from '../config';
 import {
   eventStoreProviders,
@@ -6,6 +6,7 @@ import {
   EVENT_STORE_CONFIG_USE_ENV,
 } from './event-store.provider';
 import { EventStoreService } from './event-store.service';
+import { HttpModule } from '@nestjs/axios';
 
 @Global()
 @Module({

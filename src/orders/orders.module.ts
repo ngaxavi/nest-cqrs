@@ -13,21 +13,21 @@ import { OrderCreatedEvent } from './events/impl/order-created.event';
 import { OrderUpdatedEvent } from './events/impl/order-updated.event';
 import { OrderDeletedEvent } from './events/impl/order-deleted.event';
 import { OrderFoundEvent } from './events/impl/order-found.event';
+import toJson = require('@meanie/mongoose-to-json');
 
 @Module({
   imports: [
     CqrsModule,
-    MongooseModule.forFeature([{ name: 'Order', schema: OrderSchema }]),
+    MongooseModule.forFeatureAsync([
+      {
+        name: 'Order',
+        useFactory: () => OrderSchema.plugin(toJson),
+      },
+    ]),
     EventStoreModule.forFeature(),
   ],
   controllers: [OrdersController],
-  providers: [
-    OrdersRepository,
-    OrdersService,
-    ...CommandHandlers,
-    ...EventHandlers,
-    ...QueryHandlers,
-  ],
+  providers: [OrdersRepository, OrdersService, ...CommandHandlers, ...EventHandlers, ...QueryHandlers],
 })
 export class OrdersModule implements OnModuleInit {
   public eventHandlers = {
@@ -37,10 +37,7 @@ export class OrdersModule implements OnModuleInit {
     OrderFoundEvent: (data?: string) => new OrderFoundEvent(data),
   };
 
-  constructor(
-    private readonly eventStore: EventStoreService,
-    private readonly eventBus: EventBus,
-  ) {}
+  constructor(private readonly eventStore: EventStoreService, private readonly eventBus: EventBus) {}
 
   onModuleInit() {
     this.eventStore.setEventHandlers(this.eventHandlers);

@@ -10,9 +10,9 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateOrderDto, UpdateOrderDto } from './dto';
-import { Order } from './orders.interface';
 import { OrdersService } from './orders.service';
 import { v4 as uuid } from 'uuid';
+import { OrderDocument } from './orders.schema';
 
 @Controller('orders')
 @UsePipes(new ValidationPipe())
@@ -20,7 +20,7 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Post()
-  async createOrder(@Body() orderDto: CreateOrderDto): Promise<Order> {
+  async createOrder(@Body() orderDto: CreateOrderDto): Promise<OrderDocument> {
     if (!orderDto.orderNumber) {
       orderDto.orderNumber = uuid();
     }
