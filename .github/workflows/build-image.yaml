@@ -1,0 +1,26 @@
+name: Production - Build Docker Image
+on:
+  release:
+    types:
+      - published
+jobs:
+  build_image:
+    name: Build Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract cache
+        uses: action/cache@v2
+        with:
+          path: ~/.skaffold/cache
+          key: ${{ runner.os }}-skaffold-1.13.0
+          restore-keys: ${{ runner.os }}-skaffold-
+      - name: Checkout source
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      - name: Build
+        uses: hiberbee/github-action-skaffold@latest
+        with:
+          command: build
+          repository: ghcr.io/ngaxavi/order-service
+          profile: production

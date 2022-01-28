@@ -1,0 +1,27 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: order-service
+  build:
+    tagPolicy:
+      gitCommit:
+        variant: AbbrevCommitSha
+    artifacts:
+      - image: ghcr.io/ngaxavi/order-service
+        context: .
+        docker:
+          dockerfile: Dockerfile
+          cacheFrom:
+            - ghcr.io/ngaxavi/order-service
+
+  profiles:
+    - name: dev
+      patches:
+        - op: add
+          path: /build/tagPolicy/gitCommit/prefix
+          value: dev-
+    - name: prod
+      patches:
+        - op: replace
+          path: /build/tagPolicy/gitCommit/variant
+          value: Tags
