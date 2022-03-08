@@ -15,7 +15,7 @@ jobs:
           key: ${{ runner.os }}-skaffold-1.13.0
           restore-keys: ${{ runner.os }}-skaffold-
       - name: Checkout source
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 2
       - name: Build
