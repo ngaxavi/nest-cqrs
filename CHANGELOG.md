@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/ngaxavi/nest-cqrs/compare/v1.0.0...v1.0.1) (2022-07-01)
+
+
+### Bug Fixes
+
+* eventstore docker image on mac m1 ([9773a9d](https://github.com/ngaxavi/nest-cqrs/commit/9773a9d8b9f7e3c89fe02f2f93cddfb800421211))
+
 # 1.0.0 (2022-01-28)
 
 
