@@ -88,42 +88,8 @@
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS "
     }
   },
-  "release": {
-    "branches": [
-      "main"
-    ],
-    "prepare": [
-      "@semantic-release/changelog",
-      [
-        "@semantic-release/npm",
-        {
-          "npmPublish": false
-        }
-      ],
-      {
-        "path": "@semantic-release/git",
-        "message": "chore: release ${nextRelease.version}\n\n${nextRelease.notes}"
-      }
-    ],
-    "publish": [
-      "@semantic-release/github",
-      [
-        "@semantic-release/npm",
-        {
-          "npmPublish": false
-        }
-      ]
-    ],
-    "verifyConditions": [
-      [
-        "@semantic-release/npm",
-        {
-          "npmPublish": false
-        }
-      ],
-      "@semantic-release/github"
-    ],
-    "success": false,
-    "fail": false
+  "engines": {
+    "node": "^12.20.0 || ^14.15.0 || >=16.10.0",
+    "yarn": ">=1.9.2 <2.0.0"
   }
 }

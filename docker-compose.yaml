@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   eventstore:
-    image: eventstore/eventstore:21.10.5-buster-slim
+    image: ${EVENTSTORE_IMAGE}
     container_name: eventstore
     networks:
       - order-service
