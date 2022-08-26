@@ -32,7 +32,7 @@
     "cli-color": "2.0.2",
     "fast-xml-parser": "4.0.8",
     "geteventstore-promise": "4.0.1",
-    "mongoose": "6.4.1",
+    "mongoose": "6.4.6",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "rxjs": "7.5.5",
