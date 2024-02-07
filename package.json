@@ -25,7 +25,7 @@
     "@nestjs/axios": "2.0.0",
     "@nestjs/common": "^9.3.10",
     "@nestjs/core": "9.3.10",
-    "@nestjs/cqrs": "9.0.3",
+    "@nestjs/cqrs": "10.2.7",
     "@nestjs/mongoose": "^9.2.2",
     "@nestjs/platform-express": "9.3.10",
     "class-transformer": "0.5.1",
