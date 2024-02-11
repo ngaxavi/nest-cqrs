@@ -1,4 +1,5 @@
 import { EventFactory, TCPClient, TCPConfig } from 'geteventstore-promise';
+import { EventFactory, TCPClient, TCPConfig } from '@eventstore/db-client';
 
 export interface EventStoreMessage {
   streamId: string;

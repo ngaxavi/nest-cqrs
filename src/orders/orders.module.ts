@@ -37,7 +37,10 @@ export class OrdersModule implements OnModuleInit {
     OrderFoundEvent: (data?: string) => new OrderFoundEvent(data),
   };
 
-  constructor(private readonly eventStore: EventStoreService, private readonly eventBus: EventBus) {}
+  constructor(
+    private readonly eventStore: EventStoreService,
+    private readonly eventBus: EventBus,
+  ) {}
 
   onModuleInit() {
     this.eventStore.setEventHandlers(this.eventHandlers);

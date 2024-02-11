@@ -113,7 +113,7 @@ export class ConfigService {
       },
     };
 
-    const protocol = process.env.EVENT_STORE_PROTOCOL || env.eventStore.protocol || 'http';
+    const protocol = process.env.EVENT_STORE_PROTOCOL || env.eventStore.protocol || 'esdb';
     const hostname = process.env.EVENT_STORE_HOSTNAME || env.eventStore.host || 'localhost';
     const httpPort = process.env.EVENT_STORE_HTTP_PORT || env.eventStore.httpPort || '2113';
     eventStore.uri = process.env.EVENT_STORE_URI || env.eventStore.uri || `${protocol}://${hostname}:${httpPort}`;

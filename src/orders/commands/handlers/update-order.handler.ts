@@ -6,7 +6,10 @@ import { UpdateOrderCommand } from '../impl/update-order.command';
 
 @CommandHandler(UpdateOrderCommand)
 export class UpdateOrderHandler implements ICommandHandler<UpdateOrderCommand> {
-  constructor(private readonly orderRepository: OrdersRepository, private readonly publisher: EventPublisher) {}
+  constructor(
+    private readonly orderRepository: OrdersRepository,
+    private readonly publisher: EventPublisher,
+  ) {}
 
   async execute(command: UpdateOrderCommand) {
     Logger.log(yellowBright('Async UpdateOrderHandler...', 'UpdateOrderCommand'));

@@ -1,10 +1,10 @@
-FROM node:16-slim as builder
+FROM node:18-slim as builder
 WORKDIR /app
 COPY . .
 RUN npm ci
 RUN npm run build
 
-FROM gcr.io/distroless/nodejs:16
+FROM gcr.io/distroless/nodejs:18
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=builder /app/node_modules ./node_modules
