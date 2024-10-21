@@ -22,7 +22,7 @@
   "dependencies": {
     "@eventstore/db-client": "^5.0.1",
     "@meanie/mongoose-to-json": "2.6.0",
-    "@nestjs/axios": "2.0.0",
+    "@nestjs/axios": "3.1.0",
     "@nestjs/common": "^9.3.10",
     "@nestjs/core": "9.3.10",
     "@nestjs/cqrs": "9.0.3",
