@@ -1,4 +1,4 @@
-import { EventFactory, TCPClient, TCPConfig } from 'geteventstore-promise';
+import { EventStoreDBClient, jsonEvent, JSONType } from '@eventstore/db-client';
 
 export interface EventStoreMessage {
   streamId: string;
@@ -12,17 +12,15 @@ export interface EventStoreMessage {
 }
 
 export class EventStore {
-  private eventFactory: EventFactory;
-  private client: TCPClient;
+  private client: EventStoreDBClient;
   private type: string;
 
   constructor() {
     this.type = 'event-store';
-    this.eventFactory = new EventFactory();
   }
 
-  connect(config: TCPConfig) {
-    this.client = new TCPClient(config);
+  connect(connectionString: string) {
+    this.client = EventStoreDBClient.connectionString(connectionString);
     return this;
   }
 
@@ -31,11 +29,14 @@ export class EventStore {
   }
 
   newEvent(eventType: string, data: object) {
-    return this.eventFactory.newEvent(eventType, data);
+    return jsonEvent({
+      type: eventType,
+      data: data as JSONType,
+    });
   }
 
-  close() {
-    this.client.close();
+  async close() {
+    await this.client.dispose();
     return this;
   }
 }

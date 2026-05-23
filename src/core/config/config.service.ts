@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'node:crypto';
 
 export interface Config {
   id: string;
@@ -101,7 +101,7 @@ export class ConfigService {
     // Event Store
     const eventStore: EventStoreConfig = {
       uri: process.env.EVENT_STORE_URI || '',
-      hostname: process.env.EVENT_STORE_HOTSNAME || 'localhost',
+      hostname: process.env.EVENT_STORE_HOSTNAME || 'localhost',
       tcpPort: +process.env.EVENT_STORE_TCP_PORT || 1113,
       credentials: {
         username: process.env.EVENT_STORE_CREDENTIALS_USERNAME || env.eventStore.credentials.username,
@@ -119,7 +119,7 @@ export class ConfigService {
     eventStore.uri = process.env.EVENT_STORE_URI || env.eventStore.uri || `${protocol}://${hostname}:${httpPort}`;
 
     this.config = {
-      id: uuid(),
+      id: randomUUID(),
       name: env.name || '',
       port: +process.env.PORT || env.port || 3000,
       prefix: process.env.PREFIX || env.prefix || '',

@@ -1,7 +1,7 @@
 import { Controller, Post, Body, Get, Put, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import { randomUUID } from 'node:crypto';
 import { CreateOrderDto, UpdateOrderDto } from './dto';
 import { OrdersService } from './orders.service';
-import { v4 as uuid } from 'uuid';
 import { OrderDocument } from './orders.schema';
 
 @Controller('orders')
@@ -12,7 +12,7 @@ export class OrdersController {
   @Post()
   async createOrder(@Body() orderDto: CreateOrderDto): Promise<OrderDocument> {
     if (!orderDto.orderNumber) {
-      orderDto.orderNumber = uuid();
+      orderDto.orderNumber = randomUUID();
     }
     return this.ordersService.createOrder(orderDto);
   }

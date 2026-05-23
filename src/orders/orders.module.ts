@@ -13,7 +13,7 @@ import { OrderCreatedEvent } from './events/impl/order-created.event';
 import { OrderUpdatedEvent } from './events/impl/order-updated.event';
 import { OrderDeletedEvent } from './events/impl/order-deleted.event';
 import { OrderFoundEvent } from './events/impl/order-found.event';
-import toJson = require('@meanie/mongoose-to-json');
+import * as toJson from '@meanie/mongoose-to-json';
 
 @Module({
   imports: [
@@ -37,7 +37,10 @@ export class OrdersModule implements OnModuleInit {
     OrderFoundEvent: (data?: string) => new OrderFoundEvent(data),
   };
 
-  constructor(private readonly eventStore: EventStoreService, private readonly eventBus: EventBus) {}
+  constructor(
+    private readonly eventStore: EventStoreService,
+    private readonly eventBus: EventBus,
+  ) {}
 
   onModuleInit() {
     this.eventStore.setEventHandlers(this.eventHandlers);
