@@ -6,8 +6,15 @@ This is an application that demonstrates how to use Nest.js, Event Store and Mon
 
 The following tools must be installed on your computer:
 
+- Node.js 20.11 or newer
+- npm 10 or newer
 - Docker
 - Docker-Compose
+
+The project uses an npm `overrides` entry to force `uuid` to a patched version.
+This is required because `@eventstore/db-client` currently depends on the
+vulnerable `uuid@8` range, and `npm audit` reports GHSA-w5hq-g745-h8pq without
+that override.
 
 ## Installation
 

@@ -21,7 +21,7 @@ export class OrdersRepository {
     const doc = await this.model.findById(id);
     const orderRoot = new OrderRoot(id.toHexString());
     if (doc === null) {
-      throw new NotFoundException(`Order with id ${id} does not exists`);
+      throw new NotFoundException(`Order with id ${id} does not exist`);
     }
     orderRoot.setData(doc);
     orderRoot.foundOrder();
@@ -39,7 +39,7 @@ export class OrdersRepository {
     const doc = await this.model.findByIdAndUpdate(new Types.ObjectId(id), { $set: dto }, { new: false }).exec();
     const orderRoot = new OrderRoot(id);
     if (doc === null) {
-      throw new NotFoundException(`Order with id ${id} does not exists`);
+      throw new NotFoundException(`Order with id ${id} does not exist`);
     }
     orderRoot.setData(doc);
     return orderRoot;
@@ -50,7 +50,7 @@ export class OrdersRepository {
     const orderRoot = new OrderRoot(id.toHexString());
 
     if (doc === null) {
-      throw new NotFoundException(`Order with id ${id} does not exists`);
+      throw new NotFoundException(`Order with id ${id} does not exist`);
     }
 
     orderRoot.setData(doc);

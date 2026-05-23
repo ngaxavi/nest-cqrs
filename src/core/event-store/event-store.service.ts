@@ -67,11 +67,12 @@ export class EventStoreService implements IEventPublisher, IMessageSource {
   }
 
   private toConnectionString(uri: string, credentials: { username: string; password: string }) {
-    const eventStoreUrl = new URL(uri);
-    eventStoreUrl.protocol = 'esdb:';
+    const eventStoreUrl = new URL(uri.replace(/^[^:]+:/, 'esdb:'));
     eventStoreUrl.username = credentials.username;
     eventStoreUrl.password = credentials.password;
-    eventStoreUrl.searchParams.set('tls', 'false');
+    if (!eventStoreUrl.searchParams.has('tls')) {
+      eventStoreUrl.searchParams.set('tls', 'false');
+    }
     return eventStoreUrl.toString();
   }
 }
