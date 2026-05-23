@@ -46,14 +46,14 @@ export class OrdersRepository {
   }
 
   async deleteOne(id: Types.ObjectId) {
-    const doc = this.model.findByIdAndDelete(id).exec();
+    const doc = await this.model.findByIdAndDelete(id).exec();
     const orderRoot = new OrderRoot(id.toHexString());
 
     if (doc === null) {
       throw new NotFoundException(`Order with id ${id} does not exists`);
     }
 
-    orderRoot.setData(id.toHexString());
+    orderRoot.setData(doc);
     return orderRoot;
   }
 }

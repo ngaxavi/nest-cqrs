@@ -7,7 +7,10 @@ import { DeleteOrderCommand } from '../impl/delete-order.command';
 
 @CommandHandler(DeleteOrderCommand)
 export class DeleteOrderHandler implements ICommandHandler<DeleteOrderCommand> {
-  constructor(private readonly orderRepository: OrdersRepository, private readonly publisher: EventPublisher) {}
+  constructor(
+    private readonly orderRepository: OrdersRepository,
+    private readonly publisher: EventPublisher,
+  ) {}
 
   async execute(command: DeleteOrderCommand) {
     Logger.log(yellowBright('Async DeleteOrderHandler...', 'DeleteOrderCommand'));

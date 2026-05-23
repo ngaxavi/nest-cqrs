@@ -1,20 +1,40 @@
+import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import { OrdersController } from '../src/orders/orders.controller';
+import { OrdersService } from '../src/orders/orders.service';
 
-describe('AppController (e2e)', () => {
-  let app;
+describe('OrdersController (e2e)', () => {
+  let app: INestApplication;
+  const ordersService = {
+    findAll: jest.fn().mockResolvedValue([{ id: 'order-1', orderNumber: 'order-123' }]),
+  };
 
   beforeEach(async () => {
+    jest.clearAllMocks();
+
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+      controllers: [OrdersController],
+      providers: [
+        {
+          provide: OrdersService,
+          useValue: ordersService,
+        },
+      ],
     }).compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer()).get('/').expect(200).expect('Hello World!');
+  afterEach(async () => {
+    await app.close();
+  });
+
+  it('/orders (GET)', () => {
+    return request(app.getHttpServer())
+      .get('/orders')
+      .expect(200)
+      .expect([{ id: 'order-1', orderNumber: 'order-123' }]);
   });
 });
