@@ -18,8 +18,10 @@ that override.
 
 ## Installation
 
+Use the committed lockfile for reproducible development and CI installs:
+
 ```bash
-$ npm install
+$ npm ci
 ```
 
 ## Running the app in development
@@ -30,7 +32,7 @@ To handle different image of eventstore based on the architecture `arm64` and `x
 ```bash
 # start event-store and mongodb
 $ chmod +x run-dev-env.sh
-$ ./run-dev-sh
+$ ./run-dev-env.sh
 
 # development
 $ npm run start
@@ -68,6 +70,24 @@ order ownership data, and authorization checks for every read and mutation.
 
 Development Compose ports are intentionally bound to `127.0.0.1`; do not treat its
 insecure EventStore settings as production-safe configuration.
+
+## Release and image publishing
+
+Merges to `main` run semantic-release. The release workflow uses the `xnrobot`
+service-account identity supplied through GitHub Actions secrets; credentials and
+identity values are never stored in the repository.
+
+A published GitHub release triggers the production image workflow, which logs in to
+GHCR and builds `ghcr.io/ngaxavi/order-service` with the `prod` Skaffold profile.
+The repository requires pull requests for changes to `main`, so release automation
+creates releases and tags but does not commit generated changelog files back to the
+protected branch.
+
+Required GitHub Actions secrets:
+
+- `GH_TOKEN`: an `xnrobot` token permitted to create repository releases and tags.
+- `GIT_USERNAME` and `GIT_EMAIL`: the `xnrobot` Git author identity used by
+  semantic-release.
 
 ## Test
 
