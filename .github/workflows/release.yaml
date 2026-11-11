@@ -1,7 +1,14 @@
 name: Release
+
 on:
   push:
     branches: [main]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
 jobs:
   release:
     if: "!startsWith(github.event.head_commit.message, 'chore: release')"
@@ -9,19 +16,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
         with:
-          node-version: 22.14.0
+          node-version: 24.15.0
           cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          GIT_AUTHOR_EMAIL: ${{ secrets.GIT_EMAIL }}
-          GIT_COMMITTER_EMAIL: ${{ secrets.GIT_EMAIL }}
-          GIT_AUTHOR_NAME: ${{ secrets.GIT_USERNAME }}
-          GIT_COMMITTER_NAME: ${{ secrets.GIT_USERNAME}}
+          GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+          GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+          GIT_AUTHOR_NAME: github-actions[bot]
+          GIT_COMMITTER_NAME: github-actions[bot]
         run: npx semantic-release

@@ -22,8 +22,8 @@ export class OrdersService {
     return this.queryBus.execute(new FindSingleOrderQuery(id));
   }
 
-  async findAll() {
-    return this.queryBus.execute(new FindManyOrdersQuery());
+  async findAll(limit: number) {
+    return this.queryBus.execute(new FindManyOrdersQuery(limit));
   }
 
   async updateOrder(id: string, dto: UpdateOrderDto) {
