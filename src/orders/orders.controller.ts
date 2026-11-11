@@ -1,10 +1,28 @@
-import { Controller, Post, Body, Get, Put, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  DefaultValuePipe,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
+import { Types } from 'mongoose';
+import { ApiKeyGuard } from '../core/security/api-key.guard';
+import { ParseObjectIdPipe } from '../core/pipes/parse-object-id.pipe';
 import { CreateOrderDto, UpdateOrderDto } from './dto';
 import { OrdersService } from './orders.service';
 import { OrderDocument } from './orders.schema';
 
 @Controller('orders')
+@UseGuards(ApiKeyGuard)
 @UsePipes(new ValidationPipe())
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
@@ -18,22 +36,22 @@ export class OrdersController {
   }
 
   @Get()
-  async findOrders() {
-    return this.ordersService.findAll();
+  async findOrders(@Query('limit', new DefaultValuePipe(25), ParseIntPipe) limit: number) {
+    return this.ordersService.findAll(Math.min(Math.max(limit, 1), 100));
   }
 
   @Get(':id')
-  async findOneOrder(@Param('id') id: string) {
-    return this.ordersService.findOne(id);
+  async findOneOrder(@Param('id', ParseObjectIdPipe) id: Types.ObjectId) {
+    return this.ordersService.findOne(id.toHexString());
   }
 
   @Put(':id')
-  async updateOrder(@Param('id') id: string, @Body() orderDto: UpdateOrderDto) {
-    return this.ordersService.updateOrder(id, orderDto);
+  async updateOrder(@Param('id', ParseObjectIdPipe) id: Types.ObjectId, @Body() orderDto: UpdateOrderDto) {
+    return this.ordersService.updateOrder(id.toHexString(), orderDto);
   }
 
   @Delete(':id')
-  async deleteOrder(@Param('id') id: string) {
-    return this.ordersService.deleteOrder(id);
+  async deleteOrder(@Param('id', ParseObjectIdPipe) id: Types.ObjectId) {
+    return this.ordersService.deleteOrder(id.toHexString());
   }
 }

@@ -20,27 +20,27 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@eventstore/db-client": "^5.0.1",
+    "@eventstore/db-client": "6.2.1",
     "@meanie/mongoose-to-json": "2.6.0",
-    "@nestjs/common": "11.1.23",
-    "@nestjs/core": "11.1.23",
+    "@nestjs/common": "11.2.9",
+    "@nestjs/core": "11.2.9",
     "@nestjs/cqrs": "11.0.3",
     "@nestjs/mongoose": "11.0.4",
-    "@nestjs/platform-express": "11.1.23",
+    "@nestjs/platform-express": "11.2.9",
     "class-transformer": "0.5.1",
-    "class-validator": "0.14.0",
-    "cli-color": "2.0.3",
-    "mongoose": "9.6.2",
+    "class-validator": "0.15.1",
+    "cli-color": "2.0.4",
+    "mongoose": "9.12.1",
     "reflect-metadata": "0.2.2",
-    "rimraf": "4.4.0",
-    "rxjs": "7.8.0"
+    "rimraf": "6.1.4",
+    "rxjs": "7.8.2"
   },
   "devDependencies": {
     "@commitlint/cli": "20.3.1",
     "@commitlint/config-conventional": "20.3.1",
-    "@nestjs/cli": "11.0.21",
+    "@nestjs/cli": "11.0.24",
     "@nestjs/schematics": "11.1.0",
-    "@nestjs/testing": "11.1.23",
+    "@nestjs/testing": "11.2.9",
     "@semantic-release/changelog": "6.0.2",
     "@semantic-release/git": "10.0.1",
     "@types/cli-color": "2.0.2",
@@ -86,10 +86,12 @@
     }
   },
   "engines": {
-    "node": ">=20.11.0",
+    "node": ">=20.19.0",
     "yarn": ">=1.9.2 <2.0.0"
   },
   "overrides": {
-    "uuid": "11.1.1"
+    "uuid": "11.1.1",
+    "@grpc/grpc-js": "1.14.7",
+    "protobufjs": "7.6.6"
   }
 }

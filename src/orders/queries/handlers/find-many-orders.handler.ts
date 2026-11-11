@@ -12,6 +12,6 @@ export class FindManyOrdersHandler implements IQueryHandler<FindManyOrdersQuery>
     Logger.log(yellowBright('Async FindManyOrdersHandler...', 'FindManyOrdersQuery'));
 
     Logger.log(JSON.stringify(query));
-    return this.orderRepository.findAll();
+    return this.orderRepository.findAll(query.limit);
   }
 }

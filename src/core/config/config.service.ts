@@ -50,7 +50,7 @@ export interface EventStoreEnv {
   tcpPort?: number;
   httpPort?: number;
   uri?: string;
-  credentials: {
+  credentials?: {
     username: string;
     password: string;
   };
@@ -75,7 +75,7 @@ export class ConfigService {
     if (!envs) {
       throw new Error('No Service Config provided');
     }
-    const envKey = process.env.PROD_ENV || 'development';
+    const envKey = process.env.PROD_ENV || process.env.NODE_ENV || 'development';
     const env: ConfigEnv = envs[envKey];
     if (!env) {
       throw new Error(`No Service Config for ${envKey} environment provided`);
@@ -99,13 +99,47 @@ export class ConfigService {
     }
 
     // Event Store
+    const eventStoreEnv = env.eventStore || {};
+    const isProduction = envKey === 'production';
+    const eventStoreUri =
+      process.env.EVENT_STORE_URI ||
+      eventStoreEnv.uri ||
+      `${process.env.EVENT_STORE_PROTOCOL || eventStoreEnv.protocol || 'http'}://${
+        process.env.EVENT_STORE_HOSTNAME || eventStoreEnv.host || 'localhost'
+      }:${process.env.EVENT_STORE_HTTP_PORT || eventStoreEnv.httpPort || '2113'}`;
+    const eventStoreUsername =
+      process.env.EVENT_STORE_CREDENTIALS_USERNAME || eventStoreEnv.credentials?.username || '';
+    const eventStorePassword =
+      process.env.EVENT_STORE_CREDENTIALS_PASSWORD || eventStoreEnv.credentials?.password || '';
+
+    if (
+      isProduction &&
+      (!process.env.EVENT_STORE_URI ||
+        !process.env.EVENT_STORE_CREDENTIALS_USERNAME ||
+        !process.env.EVENT_STORE_CREDENTIALS_PASSWORD)
+    ) {
+      throw new Error('Missing required production EventStore configuration');
+    }
+
+    if (isProduction) {
+      let parsedEventStoreUri: URL;
+      try {
+        parsedEventStoreUri = new URL(eventStoreUri);
+      } catch {
+        throw new Error('Production EventStore URI must use TLS');
+      }
+      if (parsedEventStoreUri.protocol !== 'esdb:' || parsedEventStoreUri.searchParams.get('tls') === 'false') {
+        throw new Error('Production EventStore URI must use TLS');
+      }
+    }
+
     const eventStore: EventStoreConfig = {
-      uri: process.env.EVENT_STORE_URI || '',
+      uri: eventStoreUri,
       hostname: process.env.EVENT_STORE_HOSTNAME || 'localhost',
       tcpPort: +process.env.EVENT_STORE_TCP_PORT || 1113,
       credentials: {
-        username: process.env.EVENT_STORE_CREDENTIALS_USERNAME || env.eventStore.credentials.username,
-        password: process.env.EVENT_STORE_CREDENTIALS_PASSWORD || env.eventStore.credentials.password,
+        username: eventStoreUsername,
+        password: eventStorePassword,
       },
       poolOptions: {
         min: +process.env.EVENT_STORE_POOLOPTIONS_MIN || 1,
@@ -113,17 +147,12 @@ export class ConfigService {
       },
     };
 
-    const protocol = process.env.EVENT_STORE_PROTOCOL || env.eventStore.protocol || 'http';
-    const hostname = process.env.EVENT_STORE_HOSTNAME || env.eventStore.host || 'localhost';
-    const httpPort = process.env.EVENT_STORE_HTTP_PORT || env.eventStore.httpPort || '2113';
-    eventStore.uri = process.env.EVENT_STORE_URI || env.eventStore.uri || `${protocol}://${hostname}:${httpPort}`;
-
     this.config = {
       id: randomUUID(),
       name: env.name || '',
       port: +process.env.PORT || env.port || 3000,
       prefix: process.env.PREFIX || env.prefix || '',
-      env: process.env.NODE_ENV || 'development',
+      env: envKey,
       mongo,
       eventStore,
     };

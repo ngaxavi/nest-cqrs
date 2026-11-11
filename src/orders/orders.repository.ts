@@ -9,8 +9,8 @@ import { OrderDocument } from './orders.schema';
 export class OrdersRepository {
   constructor(@InjectModel('Order') private readonly model: Model<OrderDocument>) {}
 
-  async findAll() {
-    const docs = await this.model.find().exec();
+  async findAll(limit: number) {
+    const docs = await this.model.find().limit(limit).exec();
     const orderRoot = new OrderRoot(undefined);
     orderRoot.setData(docs);
     orderRoot.foundOrder();
@@ -36,7 +36,9 @@ export class OrdersRepository {
   }
 
   async updateOne(id: string, dto: UpdateOrderDto) {
-    const doc = await this.model.findByIdAndUpdate(new Types.ObjectId(id), { $set: dto }, { new: false }).exec();
+    const doc = await this.model
+      .findByIdAndUpdate(new Types.ObjectId(id), { $set: dto }, { new: true, runValidators: true })
+      .exec();
     const orderRoot = new OrderRoot(id);
     if (doc === null) {
       throw new NotFoundException(`Order with id ${id} does not exist`);

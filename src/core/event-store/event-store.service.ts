@@ -71,7 +71,7 @@ export class EventStoreService implements IEventPublisher, IMessageSource {
     eventStoreUrl.username = credentials.username;
     eventStoreUrl.password = credentials.password;
     if (!eventStoreUrl.searchParams.has('tls')) {
-      eventStoreUrl.searchParams.set('tls', 'false');
+      eventStoreUrl.searchParams.set('tls', 'true');
     }
     return eventStoreUrl.toString();
   }

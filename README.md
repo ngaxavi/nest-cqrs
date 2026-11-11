@@ -6,7 +6,7 @@ This is an application that demonstrates how to use Nest.js, Event Store and Mon
 
 The following tools must be installed on your computer:
 
-- Node.js 20.11 or newer
+- Node.js 20.19 or newer
 - npm 10 or newer
 - Docker
 - Docker-Compose
@@ -49,7 +49,27 @@ $ chmod +x cleanup-dev-env.sh
 $ ./cleanup-dev-env.sh
 ```
 
-## Test (Coming soon)
+## Production security configuration
+
+Production startup fails closed unless all of the following variables are set:
+
+```bash
+API_KEY=<long-random-service-key>
+CORS_ORIGINS=https://allowed-client.example
+EVENT_STORE_URI=esdb://eventstore.example:2113?tls=true
+EVENT_STORE_CREDENTIALS_USERNAME=<least-privileged-service-user>
+EVENT_STORE_CREDENTIALS_PASSWORD=<secret>
+```
+
+All HTTP requests to `/api/orders` must supply the configured key in `x-api-key`.
+This is a **service-level perimeter**, not per-user or per-tenant authorization.
+Before exposing this service to multiple users or tenants, add an identity provider,
+order ownership data, and authorization checks for every read and mutation.
+
+Development Compose ports are intentionally bound to `127.0.0.1`; do not treat its
+insecure EventStore settings as production-safe configuration.
+
+## Test
 
 ```bash
 # unit tests
