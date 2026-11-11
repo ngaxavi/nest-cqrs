@@ -42,6 +42,10 @@ describe('GitHub Actions workflow hardening', () => {
     expect(image).toContain('registry: ghcr.io');
     expect(release).toContain('permissions:');
     expect(release).toContain('contents: write');
-    expect(release).toContain('secrets.GH_TOKEN');
+    expect(release).toContain('GH_TOKEN: ${{ secrets.GH_TOKEN }}');
+    expect(release).toContain('GIT_AUTHOR_NAME: ${{ secrets.GIT_USERNAME }}');
+    expect(release).toContain('GIT_COMMITTER_NAME: ${{ secrets.GIT_USERNAME }}');
+    expect(release).toContain('GIT_AUTHOR_EMAIL: ${{ secrets.GIT_EMAIL }}');
+    expect(release).toContain('GIT_COMMITTER_EMAIL: ${{ secrets.GIT_EMAIL }}');
   });
 });
