@@ -1,38 +1,31 @@
 module.exports = {
-    "branches": [
-      'main'
-    ],
-    "prepare": [
-      "@semantic-release/changelog",
-      [
-        "@semantic-release/npm",
-        {
-          "npmPublish": false
-        }
-      ],
+  branches: ['main'],
+  prepare: [
+    [
+      '@semantic-release/npm',
       {
-        "path": "@semantic-release/git",
-        "message": "chore: release ${nextRelease.version}\n\n${nextRelease.notes}"
-      }
+        npmPublish: false,
+      },
     ],
-    "publish": [
-      "@semantic-release/github",
-      [
-        "@semantic-release/npm",
-        {
-          "npmPublish": false
-        }
-      ]
+  ],
+  publish: [
+    '@semantic-release/github',
+    [
+      '@semantic-release/npm',
+      {
+        npmPublish: false,
+      },
     ],
-    "verifyConditions": [
-      [
-        "@semantic-release/npm",
-        {
-          "npmPublish": false
-        }
-      ],
-      "@semantic-release/github"
+  ],
+  verifyConditions: [
+    [
+      '@semantic-release/npm',
+      {
+        npmPublish: false,
+      },
     ],
-    "success": false,
-    "fail": false
-  };
+    '@semantic-release/github',
+  ],
+  success: false,
+  fail: false,
+};
